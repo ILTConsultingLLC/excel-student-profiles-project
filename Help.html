@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Excel Student Profiles</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 40px;
+      line-height: 1.6;
+    }
+    h1 {
+      color: #2c3e50;
+    }
+    h2 {
+      color: #34495e;
+    }
+    .code-font {
+      font-family: monospace;
+    }
+  </style>
+</head>
+<button onclick="topFunction()" id="topBtn" title="Go to top">↑</button>
+<script>
+  // Show button when user scrolls down 100px
+  window.onscroll = function() {
+    document.getElementById("topBtn").style.display =
+      document.body.scrollTop > 100 || document.documentElement.scrollTop > 100 ? "block" : "none";
+  };
+
+  function topFunction() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+</script>
+<style>
+  #topBtn {
+    display: none;
+    position: fixed;
+    bottom: 20px;
+    right: 30px;
+    z-index: 99;
+    font-size: 18px;
+    background-color: #34495e;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  #topBtn:hover {
+    background-color: #2c3e50;
+  }
+</style>
+
+<body>
+  <h1>CHAVEZ EXCEL STUDENT PROFILES</h1>
+  
+  <p>The information below will help you set up and manage the creation of the student profile docs. Below are three sections that show how to set up the project at the beginning of the year, what to do throughout the year, and where you can find reference material.</p>
+  <ul>
+    <li><a href="#setup">Beginning of Year Setup</a></li>
+    <li><a href="#year">Throughout the Year</a></li>
+    <li><a href="#references">References</a></li>
+  </ul>
+  <hr>
+  
+  <!-- BEGINNING OF YEAR SETUP SECTION -->
+  <h2 id="setup">BEGINNING OF YEAR SETUP</h2>
+    <h3 id="templates">Copy the Templates, Create the Folders, Set Up the Database</h3>
+      <ol>
+        <li>Create a main folder in your Google Drive that will house all of the project folders and files that you will create in the steps below.</li>
+        <li>Make a copy of the <i>Excel Student Profiles Google Spreadsheet</i> template at: <a href="https://docs.google.com/spreadsheets/d/1Xn0kIGAcfEItonYtEe1lp44IlnEnwZRkbatNmwMp7Zw/copy" target="_blank" rel="noopener noreferrer">https://docs.google.com/spreadsheets/d/1Xn0kIGAcfEItonYtEe1lp44IlnEnwZRkbatNmwMp7Zw/copy</a> and place it inside your newly created folder. This is the spreadsheet that will serve as your database.</li>
+        <li>Make a copy of the <i>Excel Profiles Google Doc</i> template at: <a href="https://docs.google.com/document/d/1EMIjCPSyxfVeyFQncplevMR66RRb_pNv0yqnJ27EJjg/copy" target="_blank" rel="noopener noreferrer">https://docs.google.com/document/d/1EMIjCPSyxfVeyFQncplevMR66RRb_pNv0yqnJ27EJjg/copy</a> and place it inside the newly created folder. This is the file that AutoCrat will use to create the profile docs that the teachers will be able to see.</li>
+        <li>From inside the main folder, create another folder where the picture images (BMP files) will be saved. You will upload the student .bmp picture files into this folder. Copy this folder's id because you will use it in the next step. If you need help finding the folder ID, go to the <i><a href="#references">REFERENCES</a></i> section below and you'll see some information on that.</li>
+        <li>Return to the <i>Excel Student Profiles Google Spreadsheet</i>, go to the <i>Setup</i> sheet, and paste the folder's id into cell <b>B3</b>.</li>
+        <li>Go back to the main folder and create another folder where the JPGs will be stored (the converted BMP files). Copy this folder's id for the next step.</li>
+        <li>Return to the <i>Excel Student Profiles Google Spreadsheet</i>, go to the <i>Setup</i> sheet, and paste the JPG folder's id into cell <b>B4</b>.</li>
+        <li>Go back to the main folder and create a third folder where the teachers will see the profile pages. Remember the name of this folder because you will need it when you set up AutoCrat below.</li>
+        <li>Share the profile pages folder with the teachers and staff that need access to the profile pages. Click on the Share button in the top right, add their names, and give them "Viewer" permission.</li>
+        <li>Return to the <i>Excel Student Profiles Google Spreadsheet</i> and update the Adv. column. Click on <i>Data</i> then <i>Data validation</i>. A side menu pops up to the right of the screen. Click on the range that looks something like, <span class="code-font">C2:C751</span>. A list of teacher initials opens up. Adjust the list by deleting the ones that are not needed and adding new ones. Once this list is updated, look at the <i>Apply to range</i> field and adjust the formula in the field to <span class="code-font">Enrolled!C2:C</span> so that it includes the dropdown in all of the cells in column C. Click the green <i>Done</i> button at the bottom right. Click the X to the right of <i>Data validation rules</i> to close the side menu.</li>
+      </ol>
+    
+    <h3 id="autocrat">AutoCrat Setup</h3>
+      <p>Think of AutoCrat as a mail merge between Google Sheets and Google Docs. AutoCrat is a Chrome extension that should already be installed on your Google Sheet account. You can verify that it is installed by going to the <i>Excel Student Profiles Google Spreadsheet</i> then clicking on <i>Extensions</i> in the top menu. If you do not see AutoCrat listed, you will need to install it by following this link: <a href="https://workspace.google.com/marketplace/app/autocrat/539341275670" target="_blank" rel="noopener">https://workspace.google.com/marketplace/app/autocrat/539341275670</a> and clicking <i>Install</i>.<br><br>Once AutoCrat has been installed, complete the next steps to create the AutoCrat job. You only need to follow the steps below to create the job initially. Once the job is created you just need to run it throughout the year.</p>
+      <ol>
+        <li>From the <i>Enrolled</i> sheet, click on <i>Extensions</i>, <i>AutoCrat</i>, then <i>Open</i>. The AutoCrat dialog window opens.</li>
+        <li>Click on <i>NEW JOB</i> at the bottom right.</li>
+        <li>Give the job an easily recognizable name. Then click on the blue <i>Next</i> button at the bottom right.</li>
+        <li>To choose the template, click on the blue <i>From drive</i> button then search for the template you downloaded in step 3 above. Once you find the template, double-click on it to select it then click on the blue <i>next</i> button.</li>
+        <li>The next step is to map the source data to the template. In the <i>Merge tab</i> dropdown, select <b>Enrolled</b>. This is the name of the sheet that the data will come from. The next step involves matching the dropdowns on the right column to the tags from the template on the left column. For example, << Images >> is on the left column, so on the field immediately to the right you will click on the dropdown and select "Images". This "maps" the data, in other words, it tells AutoCrat what data to insert into the template. Repeat this step until all of the fields on the right side are mapped to a tag on the left column. Once done mapping, click on the blue <i>Next</i> button.</li>
+        <li>In the next screen, you will tell AutoCrat how to name each file it creates. For example if I want to name the files with the student's name then their ID, I would click inside the <i> File name</i> field then click in the blue bar to the left of it. A menu listing the tags will expand. Click on one of those tags to copy it to the clipboard. In this example I would click on <<Name>>. The blue bar minimizes. Next, click inside the <i>File name</i> field and CTRL + V to paste the tag. Next, type a comma then add a space. Next, click on the blue bar again and click on the <<ID #>>. Click on the <i>File name</i> field again and CTRL + V to paste the tag. Click on the blue <i>Next</i> button.</li>
+        <li>Choose the folder you created in Step 8 above. This is where the profiles will be placed after they are created. Click the blue <i>Next</i> button.</li>
+        <li>Skip the step to add a dynamic folder. Click on the blue <i>Next</i> button.</li>
+        <li>Skip the merge condition step. Click on the blue <i>Next</i> button.</li>
+        <li>Skip the share docs & send emails steps. Click on the blue <i>Next</i> button.</li>
+        <li>In the add/remove job triggers make sure they are set to "No". Click on the blue <i>Next</i> button.</li>
+        <li>Click on the red <i>SAVE</i> button.</li>
+      </ol>
+  <hr>
+
+  <!-- THROUGHOUT THE YEAR SECTION -->
+  <h2 id="year">THROUGHOUT THE YEAR</h2>
+    <p>As the year goes on, you will need to update the <i>Excel Student Profiles Google Spreadsheet</i> then run two automations.<br><br>One automation converts student .bmp picture files into .jpg format. The conversion is necessary for Google Docs to use when making the profile docs. After the conversion is made, the script gets the hyperlink of the .jpg file and inserts it into column L of the <i>Excel Student Profiles Google Spreadsheet</i>.<br><br>The second automation is done using AutoCrat. AutoCrat merges the .jpg image and student information into the profile document.<br><br>Below are the steps for performing these two automations.</p>
+    <ol>
+      <li>As students enroll at Excel, update the data in columns A through K in the <i>Enrolled</i> sheet.</li>
+      <li>Click on the <i>Get Picture Hyperlinks</i> menu then <i>Import Picture Hyperlinks</i>. This step runs a script in the background that converts the .bmp files into .jpgs and pastes the hyperlink into column L.</li>
+      <li>Go to <i>Extensions</i> then <i>AutoCrat</i> then <i>Open</i>. Give it a few seconds to open <i>Existing Jobs</i>.</li>
+      <li>Look for the job that you created at the start of the year then click on the ▶︎ button to run the job. Once you run the AutoCrat job, it will create the profile doc and add the information in columns M through P.</li>
+    </ol>
+  <hr>
+
+  <!-- REFERENCES SECTION -->
+  <h2 id="references">REFERENCES</h2>
+    <dl>
+      <dt><b>🎥 Beginning of Year: Project Setup</b></dt>
+        <dd>This is a video showing how to set up the project for the beginning of the year. <a href="https://drive.google.com/file/d/1EqfVbenfe9bAhOe4uBO4srQJRhK8uJxr/view?usp=sharing" target="_blank" rel="noopener">https://drive.google.com/file/d/1EqfVbenfe9bAhOe4uBO4srQJRhK8uJxr/view?usp=sharing<a></dd>
+      <dt><b>🎥 Beginning of Year: AutoCrat Setup</b></dt>
+        <dd>This is a video showing how to set up AutoCrat for the beginning of the year. You only have to set up the job once. Throughout the year, you will only need to run the job. See below for running the Autocrat jobs through the year. <a href="https://drive.google.com/file/d/10trd3rLtZLrZ6fF9hbxiTkeFJYlJ9Mrd/view?usp=sharing" target="_blank" rel="noopener">https://drive.google.com/file/d/10trd3rLtZLrZ6fF9hbxiTkeFJYlJ9Mrd/view?usp=sharing</a></dd>
+      <dt><b>Finding the Google Drive Folder ID</b></dt>
+        <dd>To find the Google Drive folder ID, navigate to the folder in Google Drive and look at the URL in your browser's address bar. The folder ID is the string of letters and numbers that appears after <span class="code-font">/folders/</span> in the URL. For example, if the URL is <span class="code-font">https://drive.google.com/drive/folders/1dyUEebJaFnWa3Z4n0BFMVAXQ7mfUH11g</span>, the folder ID is <span class="code-font">1dyUEebJaFnWa3Z4n0BFMVAXQ7mfUH11g</span>.</dd>
+      <dt><b>Google Apps Script</b></dt>
+        <dd>The script in this project is written using Google Apps Script. You can find the script by clicking on <i>Extensions</i> then <i>Apps Script</i>. For more information regarding Google Apps Script visit: <a href="https://developers.google.com/apps-script" target="_blank" rel="noopener">https://developers.google.com/apps-script</a></dd>
+      <dt><b>Instructions</b></dt>
+        <dd>For a copy of these instructions: <a href="https://docs.google.com/document/d/19xUHRx5F9544qSFtgTi2nOpsRzzrzuCG6xs25g4OMwI/edit?usp=sharing" target="_blank" rel="noopener">https://docs.google.com/document/d/19xUHRx5F9544qSFtgTi2nOpsRzzrzuCG6xs25g4OMwI/edit?usp=sharing</a>.</dd>
+      <dt><b>Shared Google Drive</b></dt>
+        <dd>This link takes you to the shared drive folder containing the templates and help doc: <a href="https://drive.google.com/drive/folders/1WCgjxJpjm1CCfDWByDma9Q5HUGXT35S6?usp=drive_link" target="_blank" rel="noopener">https://drive.google.com/drive/folders/1WCgjxJpjm1CCfDWByDma9Q5HUGXT35S6?usp=drive_link</a></dd>
+      <dt><b>🎥 Throughout the Year: Import Picture Hyperlinks and Run AutoCrat</b></dt>
+        <dd>This is a video showing how to import the student picture hyperlinks and run the AutoCrat job to create the student profile docs. <a href="https://drive.google.com/file/d/11BCSiizJayssxBNe3CSfQQPHNRa2xX9J/view?usp=sharing" target="_blank" rel="noopener">https://drive.google.com/file/d/11BCSiizJayssxBNe3CSfQQPHNRa2xX9J/view?usp=sharing</a></dd>
+    </dl>
+  <hr>
+</body>
+</html>
