@@ -64,8 +64,10 @@ function processStudentImages() {
   var entryDates = sheet.getRange(2, 4, lastRow - 1, 1).getValues(); // Column D
   var imageLinks = sheet.getRange(2, 12, lastRow - 1, 1).getValues(); // Column L
 
+
   var imageFolder = DriveApp.getFolderById(BMP_FOLDER_ID);
   var updatedLinks = [];
+  var skippedSummary = [];
 
   for (var i = 0; i < studentNames.length; i++) {
     var studentName = studentNames[i][0];
@@ -76,6 +78,7 @@ function processStudentImages() {
       if (!(entryDate instanceof Date) || isNaN(entryDate)) {
         Logger.log('Invalid or missing date for: ' + studentName);
         updatedLinks.push(['']);
+        skippedSummary.push(studentName + ': Invalid or missing date');
         continue;
       }
 
@@ -89,6 +92,7 @@ function processStudentImages() {
           var jpgUrl = uploadJpgToDrive(jpgBlob, studentName, JPG_FOLDER_ID);
           updatedLinks.push([jpgUrl || '']);
           Logger.log(jpgUrl ? 'Processed: ' + studentName : 'Upload failed for: ' + studentName);
+          if (!jpgUrl) skippedSummary.push(studentName + ': Upload failed');
         } else {
           Logger.log('Conversion failed for: ' + studentName);
           updatedLinks.push(['']);
@@ -96,10 +100,12 @@ function processStudentImages() {
       } else {
         Logger.log('File not found for: ' + studentName + ' (' + bmpFileName + ')');
         updatedLinks.push(['']);
+        skippedSummary.push(studentName + ': BMP file not found');
       }
     } else {
       Logger.log('Skipping (already has image): ' + studentName);
       updatedLinks.push([existingImageLink]);
+      skippedSummary.push(studentName + ': Already has image');
     }
   }
 
@@ -109,9 +115,12 @@ function processStudentImages() {
   let processedCount = updatedLinks.filter(link => link[0]).length;
   let skippedCount = updatedLinks.length - processedCount;
 
-  SpreadsheetApp.getUi().alert(
-    `Student image processing completed.\nProcessed: ${processedCount}\nSkipped: ${skippedCount}`
-  );
+  var summaryText = `Student image processing completed.\nProcessed: ${processedCount}\nSkipped: ${skippedCount}`;
+  if (skippedSummary.length > 0) {
+    summaryText += '\n\nSkipped Students and Reasons:';
+    summaryText += '\n' + skippedSummary.join('\n');
+  }
+  SpreadsheetApp.getUi().alert(summaryText);
 }
 
 /**
