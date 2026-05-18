@@ -39,7 +39,7 @@ Rows that already have an image link in column L are skipped automatically, so t
 ### 1. Clone or copy the project
 
 ```bash
-git clone https://github.com/AlvaroGomezMartinez/excel-student-profiles-project.git
+git clone https://github.com/ILTConsultingLLC/excel-student-profiles-project.git
 ```
 
 Or use [clasp](https://github.com/google/clasp) to push directly to an existing Apps Script project:
