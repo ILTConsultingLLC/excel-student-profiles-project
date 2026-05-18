@@ -1,28 +1,28 @@
-# Ignore clasp's local settings
-.clasp.json
+# Node dependencies
+node_modules/
 
-# Ignore VSCode settings
-.vscode/
-
-# Ignore Mac system files
-.DS_Store
-
-# Ignore log files
+# Logs
 *.log
 
-# Ignore build artifacts
-dist/
-build/
-out/
+# Environment variables
+.env
+*.env.*
 
-# Ignore package lock files (if using npm/yarn)
-package-lock.json
-yarn.lock
+# clasp settings (contains scriptId — keep private)
+.clasp.json
 
-# Ignore test coverage
-coverage/
+# Mac system files
+.DS_Store
 
-# Ignore temporary files
-*.tmp
-*.swp
-*.swo
+# IDE settings
+.vscode/
+.idea/
+
+# Kiro workspace settings
+.kiro/
+
+# Script Properties backup files (if any)
+script-properties*.json
+
+# Internal district handoff document
+README_Template.md
