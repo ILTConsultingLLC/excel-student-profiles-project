@@ -1,3 +1,7 @@
-!Code.js
-!Help.html
+# Ignore everything by default
+**
+
+# Allow only pushable files
+!*.js
+!*.html
 !appsscript.json

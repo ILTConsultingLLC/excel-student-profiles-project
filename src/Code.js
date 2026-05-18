@@ -1,13 +1,19 @@
 /**
- * Excel Student Profiles Project
- * 
- * Automates the creation of Student Profiles for Chavez Excel Academy.
- * 
- * Point of contact: Alvaro Gomez, Special Campuses Academic Technology Coach, 210-363-1577
+ * @module ExcelStudentProfiles
+ *
+ * A Google Apps Script bound to a Google Sheet that automates the creation of
+ * student profile documents. It converts student BMP photo files to JPG format,
+ * uploads them to Google Drive, and inserts the image hyperlinks into the
+ * spreadsheet for use with a mail-merge tool such as AutoCrat.
+ *
+ * Originally created for a school district. Generalized for public use.
  */
 
 /**
  * Creates a custom menu in the Google Sheet for running the image import and accessing help.
+ * Runs automatically when the spreadsheet is opened.
+ *
+ * @return {void}
  */
 function onOpen() {
   var ui = SpreadsheetApp.getUi();
@@ -18,9 +24,12 @@ function onOpen() {
 }
 
 /**
- * Retrieves folder IDs from the 'Setup' sheet used for source BMPs and target JPGs.
- * 
- * @returns {{ BMP_FOLDER_ID: string, JPG_FOLDER_ID: string }} Object containing the source and destination folder IDs.
+ * Reads the source (BMP) and destination (JPG) Google Drive folder IDs from
+ * the 'Setup' sheet. Expects the BMP folder ID in cell B3 and the JPG folder
+ * ID in cell B4. Alerts the user and throws if either value is missing.
+ *
+ * @return {{ BMP_FOLDER_ID: string, JPG_FOLDER_ID: string }} An object containing
+ *     the source folder ID for BMP images and the destination folder ID for JPG images.
  */
 function getFolderIds() {
   const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('Setup');
@@ -40,7 +49,9 @@ function getFolderIds() {
 }
 
 /**
- * Opens the custom Help dialog window from an HTML file.
+ * Opens the Help dialog as a modal window using an HTML file named 'Help'.
+ *
+ * @return {void}
  */
 function showHelp() {
   var html = HtmlService.createHtmlOutputFromFile('Help')
@@ -50,8 +61,16 @@ function showHelp() {
 }
 
 /**
- * Converts BMP files into JPEGs, uploads them to Drive, and inserts hyperlinks
- * into column L of the spreadsheet for each student.
+ * Main entry point. For each student row in the active sheet, converts the
+ * corresponding BMP photo file to JPG, uploads it to Google Drive, and writes
+ * the image URL back into the spreadsheet. Rows that already have an image link
+ * or are missing a valid entry date are skipped. Displays a summary alert when
+ * complete.
+ *
+ * Reads student names from column B, entry dates from column D, and existing
+ * image links from column L. Writes updated image links back to column L.
+ *
+ * @return {void}
  */
 function processStudentImages() {
   const { BMP_FOLDER_ID, JPG_FOLDER_ID } = getFolderIds();
@@ -63,7 +82,6 @@ function processStudentImages() {
   var studentNames = sheet.getRange(2, 2, lastRow - 1, 1).getValues(); // Column B
   var entryDates = sheet.getRange(2, 4, lastRow - 1, 1).getValues(); // Column D
   var imageLinks = sheet.getRange(2, 12, lastRow - 1, 1).getValues(); // Column L
-
 
   var imageFolder = DriveApp.getFolderById(BMP_FOLDER_ID);
   var updatedLinks = [];
@@ -124,10 +142,10 @@ function processStudentImages() {
 }
 
 /**
- * Formats a Date object into "M.D.YY" format.
- * 
+ * Formats a Date object into "M.D.YY" format (e.g., 9.5.24 for September 5, 2024).
+ *
  * @param {Date} date - The date to format.
- * @returns {string} The formatted date string.
+ * @return {string} The formatted date string in M.D.YY format.
  */
 function formatCustomDate(date) {
   var month = date.getMonth() + 1;
@@ -137,11 +155,11 @@ function formatCustomDate(date) {
 }
 
 /**
- * Finds a file by name within a given Google Drive folder.
- * 
- * @param {GoogleAppsScript.Drive.Folder} folder - The Drive folder to search in.
- * @param {string} fileName - The exact name of the file to find.
- * @returns {GoogleAppsScript.Drive.File|null} The found file, or null if not found.
+ * Searches a Google Drive folder for a file matching the given name.
+ *
+ * @param {GoogleAppsScript.Drive.Folder} folder - The Drive folder to search.
+ * @param {string} fileName - The exact file name to look for.
+ * @return {GoogleAppsScript.Drive.File|null} The matching file, or null if not found.
  */
 function findFileInFolder(folder, fileName) {
   var files = folder.getFilesByName(fileName);
@@ -149,10 +167,12 @@ function findFileInFolder(folder, fileName) {
 }
 
 /**
- * Simulates conversion of a BMP file to JPG by renaming the blob with a .jpg extension.
- * 
- * @param {GoogleAppsScript.Drive.File} bmpFile - The BMP file to "convert".
- * @returns {GoogleAppsScript.Base.Blob|null} A renamed Blob as JPG, or null on failure.
+ * Converts a BMP file to JPG by renaming its blob with a .jpg extension.
+ * Note: This does not perform a true image format conversion — it renames the
+ * blob so it can be stored and referenced as a JPG in Google Drive.
+ *
+ * @param {GoogleAppsScript.Drive.File} bmpFile - The BMP file to convert.
+ * @return {GoogleAppsScript.Base.Blob|null} The renamed blob, or null if an error occurs.
  */
 function convertBmpToJpg(bmpFile) {
   try {
@@ -164,12 +184,12 @@ function convertBmpToJpg(bmpFile) {
 }
 
 /**
- * Uploads a JPG Blob to a specified folder in Drive and returns its URL.
- * 
+ * Uploads a JPG blob to a specified Google Drive folder and returns the file URL.
+ *
  * @param {GoogleAppsScript.Base.Blob} jpgBlob - The JPG blob to upload.
- * @param {string} studentName - The name associated with the image (for logging).
- * @param {string} JPG_FOLDER_ID - The ID of the Drive folder to upload the image to.
- * @returns {string|null} The URL of the uploaded image, or null if upload fails.
+ * @param {string} studentName - The student's name, used for logging purposes.
+ * @param {string} JPG_FOLDER_ID - The ID of the destination Drive folder.
+ * @return {string|null} The URL of the uploaded file, or null if the upload fails.
  */
 function uploadJpgToDrive(jpgBlob, studentName, JPG_FOLDER_ID) {
   try {
